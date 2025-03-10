@@ -4,7 +4,7 @@
 
 A Chrome extension that allows you to draw custom colored rectangles on any web page.
 
-This repository was 99% AI generated (thanks [cline](https://github.com/cline/cline)). I left the "icon creationg" setup here as is, as I found it a novel idea that allowed the AI to fully create the extension (including images).
+This repository was 99% AI generated (thanks [cline](https://github.com/cline/cline)). I left the "icon creation" setup here as is, as I found it a novel idea that allowed the AI to fully create the extension (including images).
 
 ## Features
 
