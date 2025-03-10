@@ -1,0 +1,15 @@
+.rectangle-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2147483647; /* Maximum z-index value to ensure it's on top */
+  pointer-events: none; /* Don't capture clicks/interactions by default */
+}
+
+/* When drawing mode is active, we capture mouse events */
+.rectangle-drawer-overlay.active {
+  pointer-events: auto;
+  cursor: crosshair;
+}

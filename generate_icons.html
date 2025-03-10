@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Rectangle Drawer Icons</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .icons-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .icon-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      background-color: white;
+    }
+    .instructions {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+      border-left: 4px solid #4285f4;
+      margin: 20px 0;
+    }
+    button {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rectangle Drawer Icon Generator</h1>
+  
+  <div class="instructions">
+    <h3>Instructions:</h3>
+    <p>1. Click the "Generate Icons" button below to create the extension icons.</p>
+    <p>2. Right-click on each icon and select "Save Image As..."</p>
+    <p>3. Save each icon with the corresponding name to the "images" folder:</p>
+    <ul>
+      <li>16x16 icon as: <strong>icon16.png</strong></li>
+      <li>48x48 icon as: <strong>icon48.png</strong></li>
+      <li>128x128 icon as: <strong>icon128.png</strong></li>
+    </ul>
+    <p>4. Make sure to create the "images" folder first if it doesn't exist</p>
+  </div>
+  
+  <button onclick="generateIcons()">Generate Icons</button>
+  
+  <div class="icons-container" id="icons-container"></div>
+  
+  <script>
+    function generateIcons() {
+      const sizes = [16, 48, 128];
+      const container = document.getElementById('icons-container');
+      container.innerHTML = '';
+      
+      sizes.forEach(size => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'icon-wrapper';
+        
+        const label = document.createElement('p');
+        label.textContent = `${size}x${size} Icon (Save as icon${size}.png)`;
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        canvas.id = `canvas-${size}`;
+        
+        wrapper.appendChild(canvas);
+        wrapper.appendChild(label);
+        container.appendChild(wrapper);
+        
+        drawIcon(canvas, size);
+      });
+    }
+    
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      const padding = Math.max(Math.floor(size * 0.1), 1);
+      
+      // Background
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, size, size);
+      
+      // Border
+      ctx.strokeStyle = '#444444';
+      ctx.lineWidth = Math.max(Math.floor(size * 0.03), 1);
+      ctx.strokeRect(padding, padding, size - padding * 2, size - padding * 2);
+      
+      // Red rectangle
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
+      ctx.fillRect(padding * 2, padding * 2, size / 2, size / 2);
+      
+      // Blue rectangle
+      ctx.fillStyle = 'rgba(0, 0, 255, 0.7)';
+      ctx.fillRect(size / 3, size / 3, size / 2, size / 2);
+      
+      // Pencil/draw indicator in corner
+      const pencilSize = Math.max(Math.floor(size * 0.2), 2);
+      
+      ctx.fillStyle = '#333333';
+      ctx.beginPath();
+      ctx.moveTo(size - padding, size - padding);
+      ctx.lineTo(size - padding - pencilSize, size - padding);
+      ctx.lineTo(size - padding, size - padding - pencilSize);
+      ctx.closePath();
+      ctx.fill();
+    }
+  </script>
+</body>
+</html>

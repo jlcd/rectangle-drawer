@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rectangle Drawer</title>
+  <style>
+    body {
+      width: 280px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .control-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .toggle-label {
+      flex: 1;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #4285f4;
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+    #saved-rectangles {
+      max-height: 100px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 5px;
+      margin-top: 10px;
+    }
+    .saved-rect {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      padding: 3px;
+      border-radius: 3px;
+    }
+    .color-preview {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rectangle Drawer</h1>
+  
+  <div class="control-group">
+    <label for="rectangle-color">Rectangle Color:</label>
+    <input type="color" id="rectangle-color" value="#FF0000">
+  </div>
+  
+  <div class="control-group">
+    <label for="rectangle-opacity">Opacity:</label>
+    <input type="range" id="rectangle-opacity" min="0" max="1" step="0.1" value="0.5">
+    <span id="opacity-value">0.5</span>
+  </div>
+  
+  <div class="control-group">
+    <div class="toggle-container">
+      <span class="toggle-label">Drawing Mode</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="drawing-mode">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <small>Toggle to start/stop drawing rectangles</small>
+  </div>
+  
+  <div class="control-group">
+    <button id="clear-all">Clear All Rectangles</button>
+  </div>
+  
+  <div class="control-group">
+    <label>Saved Rectangles:</label>
+    <div id="saved-rectangles">
+      <!-- Saved rectangles will be displayed here -->
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
