@@ -92,31 +92,38 @@ function createCanvasOverlay() {
   // Create new canvas
   canvasOverlay = document.createElement('canvas');
   canvasOverlay.className = 'rectangle-drawer-overlay';
-  
-  // Set canvas size to match viewport
-  canvasOverlay.width = window.innerWidth;
-  canvasOverlay.height = window.innerHeight;
-  
-  // Append to document
+
+  // Append first so getBoundingClientRect reflects the CSS-rendered size
   document.body.appendChild(canvasOverlay);
-  
+
   // Get context for drawing
   ctx = canvasOverlay.getContext('2d');
-  
+
+  // Size the drawing buffer to match the element's rendered size 1:1 with
+  // CSS pixels. Using window.innerWidth/Height breaks when the viewport
+  // has a scrollbar, because the fixed-position overlay's actual width is
+  // the viewport minus the scrollbar — the mismatch causes the canvas to
+  // scale its buffer onto the display, shifting drawings progressively
+  // toward the right edge.
+  syncCanvasSize();
+
   // Add event listeners
   canvasOverlay.addEventListener('mousedown', handleMouseDown);
   canvasOverlay.addEventListener('mousemove', handleMouseMove);
   canvasOverlay.addEventListener('mouseup', handleMouseUp);
-  
+
   // Handle window resize
   window.addEventListener('resize', () => {
-    // Adjust canvas size
-    canvasOverlay.width = window.innerWidth;
-    canvasOverlay.height = window.innerHeight;
-    
-    // Redraw all rectangles
+    syncCanvasSize();
     drawAllRectangles();
   });
+}
+
+function syncCanvasSize() {
+  if (!canvasOverlay) return;
+  const rect = canvasOverlay.getBoundingClientRect();
+  canvasOverlay.width = Math.round(rect.width);
+  canvasOverlay.height = Math.round(rect.height);
 }
 
 // Mouse event handlers
